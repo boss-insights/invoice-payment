@@ -11,7 +11,7 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
-    <script src="step3.js" defer></script>
+    <script src="step3.js" type="module" defer></script>
     <title>Invoice Payment - Step 3</title>
 </head>
 <body class="bg-light">
@@ -33,31 +33,8 @@
                 </div> -->
                 <form id="invoice-form" class="needs-validation" action="step3.php" method="post" accept-charset="UTF-8"
                       enctype="application/x-www-form-urlencoded">
-                    <ul id="invoiceList" class="list-group mb-3">
-                        <!-- {% for invoice in invoices %}
-                            <li class="list-group-item d-flex justify-content-between lh-sm"
-                                data-invoice-number="{{ invoice.number }}" data-invoice-company="{{ invoice.company }}"
-                                data-invoice-amount="{{ invoice.amount }}" data-invoice-days="{{ invoice.days }}"
-                                data-invoice-due="{{ invoice.due }}"
-                                data-invoice-email="{{ invoice.billing_email }}">
-                                <div class="selectInvoice form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" name="invoice1"
-                                           aria-label="Select invoice">
-                                </div>
-                                <div class="invoiceInfo flex-grow-1">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <h6 class="my-0">Invoice #</h6>
-                                        <small class="invoiceDays ms-2 badge badge rounded-pill"></small>
-                                    </div>
-                                    <small class="invoiceCompany text-muted">xxx</small>
-                                </div>
-                                    <span class="invoiceAmount text-muted">$0</span>
-                            </li>
-                        {% endfor %} -->
-                    </ul>
+                    <!-- step3.js inserts htm here -->
                     <hr class="my-4">
-                    <!-- <input type="hidden" id="nextStep" name="nextStep" value="1"> -->
-                    <!-- <button id="paymentLink" class="w-100 btn btn-primary btn-lg">Send Payment Link</button> -->
                 </form>
                 <button id="paymentLink" class="w-100 btn btn-primary btn-lg">Send Payment Link</button>
             </div>
@@ -65,6 +42,7 @@
     </div>
     </main>
     <footer class="my-5 pt-5 text-muted text-center text-small">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
         <p class="mb-1">&copy; 2021-2023 RealBusiness</p>
         <ul class="list-inline">
           <li class="list-inline-item"><a href="#">Privacy</a></li>
