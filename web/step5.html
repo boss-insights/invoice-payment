@@ -13,7 +13,8 @@
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
     <link rel="stylesheet" href="checkout.css" />
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="step5.js"></script>
+    <script src="step2.js"  type="module" ></script>
+    <script src="step5.js"  type="module" ></script>
     <script src="checkout.js" defer></script>
     <title>Document</title>
   </head>
@@ -26,8 +27,9 @@
             <p class="lead">Using Accounting App Data To Show A List Of Invoices For Factoring</p>
             <hr>
         </div>
-    
+
         <div class="d-flex justify-content-center row g-5 text-center">
+            <div id="invoice-data"></div>
             <h4 class="fs-4 fw-normal text-center my-1 mb-3">Please enter your payment information:</h4>
 
             <form id="payment-form">
@@ -43,12 +45,8 @@
               </button>
               <div id="payment-message" class="hidden"></div>
             </form>
-
-            <hr>
-
-            
-
         </div>
+     
       </main>
     </div>
   </body>
