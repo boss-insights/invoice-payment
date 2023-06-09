@@ -9,7 +9,8 @@
         "ext-json": "*",
         "ext-session": "*",
         "ext-openssl": "*",
-        "guzzlehttp/guzzle": "^7"
+        "guzzlehttp/guzzle": "^7",
+        "stripe/stripe-php": "^10.14"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
@@ -26,6 +27,8 @@
             "@putenv BRAND_ACCENT_COLOR=FF0000",
             "@putenv BRAND_LOGO=https://myintranet.app/img/demo/lendcorp.png",
             "@putenv SELF_SIGNED_CERT=1",
+            "@putenv STRIPE_SECRET_KEY= secret key",
+            "@putenv STRIPE_PUBLISH_KEY= publishable key",
             "php -d max_execution_time=600 -d variables_order=EGPCS -S 127.0.0.1:8080 -t web"
         ]
     },
