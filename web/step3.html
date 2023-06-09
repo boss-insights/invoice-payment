@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./invoice.css"/>
+    <link rel="stylesheet" type="text/css" href="./spinner.css"/>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -23,23 +24,24 @@
             <p class="lead">Using Accounting App Data To Show A List Of Invoices For Factoring</p>
         </div>
         <hr>
+        
             <div id="invoiceContainer">
                 <h4 class="mb-3">Found the following invoices, select to send payment link:</h4>
-                <!-- <div id="selectAllWrapper" class="d-flex justify-content-end">
-                    <input class="btn-check" type="checkbox" value="" id="selectAll">
-                    <label class="btn btn-outline-primary" for="selectAll">
-                        Select All Invoices
-                    </label>
-                </div> -->
+
                 <form id="invoice-form" class="needs-validation" action="step3.php" method="post" accept-charset="UTF-8"
                       enctype="application/x-www-form-urlencoded">
-                    <!-- step3.js inserts htm here -->
-                    <hr class="my-4">
+                    <!-- step3.js inserts html here --> 
                 </form>
-                <button id="paymentLink" class="w-100 btn btn-primary btn-lg">Send Payment Link</button>
+                <hr class="my-4">
+                <div class="lds-ellipsis"><div></div><div></div><div></div></div>
+                <div id="buttonContainer" class="d-flex justify-content-center row text-center mb-5">
+                    <button id="paymentLink" class="w-100 btn btn-primary btn-lg my-3" disabled>Send Payment Link</button>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div id="button-box" class="button-box col-lg-12"></div>
+    
     </main>
     <footer class="my-5 pt-5 text-muted text-center text-small">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

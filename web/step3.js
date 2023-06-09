@@ -4,18 +4,23 @@ paymentLink.addEventListener("click", showPaymentLink);
 function showPaymentLink(invoiceID) {
     //shows payment url after button is clicked
     let paymentURL = document.createElement("a");
+    let buttonBox = document.getElementById("button-box");
+    buttonBox.appendChild(paymentURL);
     paymentURL.setAttribute("href", "./step4.html");
+    paymentURL.setAttribute("class", "w-45 btn btn-secondary btn-lg col");
     paymentURL.innerHTML="Payment Link";
-    invoiceContainer.appendChild(paymentURL);
-    console.log("paymentUrl working")
+    buttonContainer.appendChild(paymentURL);
+    
     //shows invoice status page url after button is clicked
     let statusURL = document.createElement("a");
+    buttonBox.appendChild(statusURL);
     statusURL.setAttribute("href", "./step7_invoiceStatus.html");
+    statusURL.setAttribute("class", "w-45 btn btn-secondary btn-lg col");
     let lineBreak = document.createElement("br")
     invoiceContainer.appendChild(lineBreak);
     statusURL.innerHTML="Invoice Status";
-    invoiceContainer.appendChild(statusURL);
-    console.log("statusURL working")
+    buttonContainer.appendChild(statusURL);
+   
     //disables payment button
     paymentLink.setAttribute("disabled", true);
     paymentLink.innerHTML = "Payment Link Sent";
@@ -37,7 +42,7 @@ fetch(url, {
         `<li class="list-group-item d-flex justify-content-between lh-sm" data-invoice-json="${encodeURIComponent(JSON.stringify(invoice))}">
         
             <div class="selectInvoice form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" value="" name="${invoice.number}"
+                <input class="form-check-input" type="radio" value="" name="invoiceRadio"
                         aria-label="Select invoice">
             </div>
             <div class="invoiceInfo flex-grow-1">
@@ -57,26 +62,24 @@ fetch(url, {
     invoiceList += '</ul>'
     document.getElementById('invoice-form').innerHTML+=invoiceList;
 
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const radios = document.querySelectorAll('input[type="radio"]');
 
 
-    checkboxes.forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
+    radios.forEach(function (radio) {
+    radio.addEventListener('change', function () {
         if (this.checked) {
-        // console.log('Checkbox ' + this.name + ' is checked');
+       
         let invoiceJSON = decodeURIComponent(this.closest('li').dataset.invoiceJson);
         localStorage.setItem('invoiceJSON', invoiceJSON);
+        paymentLink.removeAttribute("disabled");
         
-        // parsedInvoiceData = JSON.parse(invoiceJSON);
-        console.log(invoiceJSON);
+        } 
         
-        } else {
-        console.log('Checkbox ' + this.id + ' is not checked');
-        }
     });
     });
 
-    
+    let loadingSpinner = document.getElementsByClassName("lds-ellipsis");
+    loadingSpinner[0].remove();
 
   })
   .catch(error => {
