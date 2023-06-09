@@ -11,12 +11,35 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
-    <!-- <script src="./step2.js" type="module"></script> -->
-  
-    <script
-      src="{ORG_URL}/dock/link/2022-09-08/link.js"
-      type="text/javascript"
-    ></script>
+
+
+
+    <script type="module">
+      import {getSessionCookie} from './step2.js';
+      import {loadScript} from './step2.js';
+         const srcLink = decodeURIComponent(getSessionCookie('ORG_URL')) + "/dock/link/2022-09-08/link.js";
+        loadScript(srcLink)
+        .then( data  => {
+            console.log("Script loaded successfully", data);
+            const widget = new DockLink({
+            container: document.getElementsByClassName('DockLink_AppList')[0],
+            name: getSessionCookie('org_name'),
+            brand: {accent:"#" + getSessionCookie("brand_colour")},
+            domain: getSessionCookie('account_domain'),
+            cancel: getSessionCookie('site_url') + "/step1.php",
+            redirect: getSessionCookie('site_url') + "/step3.php",
+            platforms: ["accounting"],
+            token: getSessionCookie('embed_token'),
+          });
+
+          console.log(getSessionCookie('org_name'));
+          widget.render();
+        })
+        .catch( err => {
+            console.error(err);
+        });
+    </script>
+
     <title>Invoice Payment - Step 2</title>
   </head>
   <body class="bg-light">
@@ -37,27 +60,6 @@
         <div class="DockLink_AppList">
           
         </div>
-
-        <!-- <script src="./step2.js" type="module"></script> -->
-          <script type="module">
-          import {getSessionCookie} from './step2.js';
-          console.log("HERE");
-
-          const widget = new DockLink({
-            container: document.getElementsByClassName('DockLink_AppList')[0],
-            name: getSessionCookie('org_name'),
-            brand: {accent:"#" + getSessionCookie("brand_colour")},
-            domain: getSessionCookie('account_domain'),
-            cancel: getSessionCookie('site_url') + "/step1.php",
-            redirect: getSessionCookie('site_url') + "/step3.php",
-            platforms: ["accounting"],
-            token: getSessionCookie('embed_token'),
-          });
-
-          console.log(getSessionCookie('org_name'));
-          widget.render();
-
-        </script>
 
       </main>
       <footer class="my-5 pt-5 text-muted text-center text-small">
