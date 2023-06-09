@@ -17,20 +17,11 @@ $commonData = array(
   'ACCOUNT_KEY' => getenv('ACCOUNT_KEY'),
   'BRAND_ACCENT_COLOR' => str_replace('#', '', (getenv('BRAND_ACCENT_COLOR') === false) ? '3199DB' : getenv('BRAND_ACCENT_COLOR')),
   'BRAND_LOGO' => empty(getenv('BRAND_LOGO')) ? '/img/boss256.png' : getenv('BRAND_LOGO'),
-  'ENVIRONMENT' => (getenv('ENVIRONMENT') === false) ? 'production' : getenv('ENVIRONMENT')
+  'ENVIRONMENT' => (getenv('ENVIRONMENT') === false) ? 'production' : getenv('ENVIRONMENT'),
+  'STRIPE_SECRET_KEY' => getenv('STRIPE_SECRET_KEY'),
+  'STRIPE_PUBLISH_KEY' => getenv('STRIPE_PUBLISH_KEY'),
+
 );
 
-// $twigLoader = new FilesystemLoader(__DIR__ . '/templates/');
-// $twig = new Environment($twigLoader, [
-//   'debug' => true
-// ]);
-// $twig->addExtension(new DebugExtension());
 
 session_start();
-
-// foreach ($commonData as $commonKey => $commonValue) {
-//   if (empty($commonValue) && $commonKey !== 'API_SECRET') {
-// 	echo $twig->render('error.twig', array_merge($commonData, ['errorType' => 'Error', 'errorName' => 'empty variable', 'errorDescription' => 'environment variable ' . $commonKey . ' cannot be empty']));
-// 	throw new Exception('environment variable ' . $commonKey . ' cannot be empty');
-//   }
-// }

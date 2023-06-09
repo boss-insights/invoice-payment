@@ -1,16 +1,44 @@
+function getSessionCookie(cookieName) {
+    let cookies = document.cookie.split(";"); // Split cookies by ';'
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim(); // Trim leading/trailing whitespace
+     
+      // Check if the cookie starts with the provided name
+
+      if (cookie.indexOf(cookieName + "=") === 0) {
+        
+        // Return the cookie value (substring after the name and '=')
+        console.log(cookie.substring(cookieName.length + 1));
+        return cookie.substring(cookieName.length + 1);
+      }
+    }
+    
+    // Return null if the cookie is not found
+    return null;
+  };
+
+// import { getSessionCookie } from "./step2.js";
+
 // This is your test publishable API key.
-const stripe = Stripe("");
+const decodedStripe = decodeURI(getSessionCookie('STRIPE_PUBLISH_KEY'))
+const stripe = Stripe(decodedStripe);
 
 // The items the customer wants to buy
 let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
 const items = [{invoiceNumber: parsedInvoiceData["number"]},
-               {invoiceAmount: parsedInvoiceData["amount"]} ];
+               {invoiceAmount: Math.ceil(parsedInvoiceData["amount"]*100)} ];
 
-console.log("checkout.js items: ",items);
+localStorage.setItem("invoiceNumber", parsedInvoiceData["number"]);
+localStorage.setItem("invoiceStatus","pending");
+
+console.log("checkout.js amount as int: ",Math.ceil(parsedInvoiceData["amount"]*100));
 
 let elements;
 
-initialize();
+let currentPaymentIntent = initialize();
+
+console.log(currentPaymentIntent);
+
 checkStatus();
 
 document
@@ -37,6 +65,9 @@ async function initialize() {
 
   const paymentElement = elements.create("payment", paymentElementOptions);
   paymentElement.mount("#payment-element");
+
+  
+
 }
 
 async function handleSubmit(e) {

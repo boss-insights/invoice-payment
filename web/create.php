@@ -1,15 +1,16 @@
 <?php
 
+require __DIR__ . '/../common.php';
 require_once '../vendor/autoload.php';
-require_once './stripe-secret.php';
+// require_once './stripe-secret.php';
 
-\Stripe\Stripe::setApiKey($stripeSecretKey);
+\Stripe\Stripe::setApiKey($commonData['STRIPE_SECRET_KEY']);
 
 function calculateOrderAmount(array $items): int {
     // Replace this constant with a calculation of the order's amount
     // Calculate the order total on the server to prevent
     // people from directly manipulating the amount on the client
-    return 1400; //$items["0"]["amount"];
+    return $items[1]->invoiceAmount;
 }
 
 
@@ -21,8 +22,6 @@ try {
     $jsonStr = file_get_contents('php://input');
     $jsonObj = json_decode($jsonStr);
 
-    // echo $jsonObj->items;
-
     // Create a PaymentIntent with amount and currency
     $paymentIntent = \Stripe\PaymentIntent::create([
         'amount' => calculateOrderAmount($jsonObj->items),
@@ -30,6 +29,9 @@ try {
         'automatic_payment_methods' => [
             'enabled' => true,
         ],
+        'metadata' => [
+            'invoiceNumber' =>  $jsonObj->items['0']->invoiceNumber,
+        ]
     ]);
 
     $output = [
