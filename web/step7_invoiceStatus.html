@@ -12,7 +12,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
-    <title>Document</title>
+    <title>Invoice Payment - Invoice Status</title>
     <script src="step7.js" defer></script>
   </head>
   <body class="bg-light">
@@ -21,13 +21,15 @@
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4" src="{{ BRAND_LOGO }}" alt="" height="64">
             <h2>Invoice Payment - Invoice Status</h2>
-            <p class="lead">Using Accounting App Data To Show A List Of Invoices For Factoring</p>
+            <p class="lead">Using Accounting App Data To Send Payment Links For Invoices</p>
+            <hr>
         </div>
-        <hr>
+        
     
-        <div id= "invoice-status"class="d-flex justify-content-center row g-5 text-center">
+        <div id= "invoice-status">
             
         </div>
+        <a href="step3.php"><button type="button" class="btn btn-primary">Send Another Payment Link</button></a>
       </main>
     </div>
   </body>

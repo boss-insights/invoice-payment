@@ -11,26 +11,25 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
-    <script src="step6.js"></script>
+    <script src="step6.js"  defer></script>
 
-    <title>Document</title>
+    <title>Invoice Example - Payment Status</title>
   </head>
   <body class="bg-light">
     <div class="container">
       <main>
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4" src="{{ BRAND_LOGO }}" alt="" height="64">
-            <h2>Invoice Example - Step 6</h2>
-            <p class="lead">Using Accounting App Data To Show A List Of Invoices For Factoring</p>
+            <h2>Invoice Example - Payment Status</h2>
+            <p class="lead">Using Accounting App Data To Send Payment Links For Invoices</p>
         </div>
         <hr>
     
         <div class="d-flex justify-content-center row g-5 text-center">
             <i class="d-flex justify-content-center align-items-center  checkmark">✓</i>
             <h2 class="text-success">SUCCESS!</h2>
-            <p class="fs-4 fw-normal text-center my-1">You've successfully paid invoice #2.</p>
+            <p id="successMessage" class="fs-4 fw-normal text-center my-1"></p>
             <p class="fs-4 fw-normal text-center my-1">Thank you for the privilege of your business. Let us know if we can help in the future.</p>
-            <p class="list-inline-item"><a href="/step1.html">Home</a></p>
         </div>
       </main>
     </div>

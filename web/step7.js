@@ -5,10 +5,22 @@ let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
 
 let customer_name = parsedInvoiceData["company"];
 
-let invoice_number = localStorage.getItem("invoiceNumber");
-let invoice_status = localStorage.getItem("invoiceStatus");
+
+// Check invoice status.
+let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
+let currentInvoiceStatus = parsedInvoiceStatus[parsedInvoiceData.number];
+if (currentInvoiceStatus == undefined) {
+    currentInvoiceStatus = "pending";
+}
 
 
-invoice_status_container.innerHTML = `<p>${customer_name}'s invoice ${invoice_number} is ${invoice_status}</p>`;
+invoice_status_container.innerHTML = `
+    <h4><strong>Company Name: ${parsedInvoiceData.company}</strong></h4>
+    <h4><strong>Invoice: #${parsedInvoiceData.number}</strong></h4>
+    <h4><strong>Amount due: $${parsedInvoiceData.amount.toFixed(2)}</strong></h4>
+    <h4><strong>Due date: ${parsedInvoiceData.due.slice(0,10)}</strong></h4>
+    <h4><strong>Invoice status: ${currentInvoiceStatus}</strong></h4>`;
+
+
 
 

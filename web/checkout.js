@@ -28,8 +28,11 @@ let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
 const items = [{invoiceNumber: parsedInvoiceData["number"]},
                {invoiceAmount: Math.ceil(parsedInvoiceData["amount"]*100)} ];
 
-localStorage.setItem("invoiceNumber", parsedInvoiceData["number"]);
-localStorage.setItem("invoiceStatus","pending");
+// Set the invoice as pending.
+let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
+parsedInvoiceStatus[parsedInvoiceData["number"]] = "pending";
+localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
+
 
 console.log("checkout.js amount as int: ",Math.ceil(parsedInvoiceData["amount"]*100));
 

@@ -1,5 +1,3 @@
-import {getSessionCookie} from './step2.js';
-
 paymentLink.addEventListener("click", showPaymentLink);
 function showPaymentLink(invoiceID) {
     //shows payment url after button is clicked
@@ -7,7 +5,7 @@ function showPaymentLink(invoiceID) {
     let buttonBox = document.getElementById("button-box");
     buttonBox.appendChild(paymentURL);
     paymentURL.setAttribute("href", "./step4.html");
-    paymentURL.setAttribute("class", "w-45 btn btn-secondary btn-lg col");
+    paymentURL.setAttribute("class", "btn btn-secondary btn-lg mb-3");
     paymentURL.innerHTML="Payment Link";
     buttonContainer.appendChild(paymentURL);
     
@@ -15,7 +13,7 @@ function showPaymentLink(invoiceID) {
     let statusURL = document.createElement("a");
     buttonBox.appendChild(statusURL);
     statusURL.setAttribute("href", "./step7_invoiceStatus.html");
-    statusURL.setAttribute("class", "w-45 btn btn-secondary btn-lg col");
+    statusURL.setAttribute("class", "btn btn-secondary btn-lg mb-3");
     let lineBreak = document.createElement("br")
     invoiceContainer.appendChild(lineBreak);
     statusURL.innerHTML="Invoice Status";
@@ -28,7 +26,6 @@ function showPaymentLink(invoiceID) {
 
 
 const url = 'step3.php?invoices';
-var parsedInvoiceData;
 
 fetch(url, {
   method: 'GET',
@@ -36,7 +33,13 @@ fetch(url, {
   .then(response => response.json())
   .then(data => {
     let invoiceList = '<ul id="invoiceList" class="list-group mb-3">';
+
+    
     for (let invoice of data) {
+
+      // Assign background color according to number of days due
+      let daysInteger = invoice.days;
+      let invoiceDaysClass = daysInteger > 90 ? 'bg-red' : daysInteger > 60 ? 'bg-orange' : 'bg-green';
 
         let invoiceListItems = 
         `<li class="list-group-item d-flex justify-content-between lh-sm" data-invoice-json="${encodeURIComponent(JSON.stringify(invoice))}">
@@ -47,14 +50,14 @@ fetch(url, {
             </div>
             <div class="invoiceInfo flex-grow-1">
                 <div class="d-flex flex-row align-items-center">
-                    <h6 class="my-0">${invoice.number}</h6>
-                    <small class="invoiceDays ms-2 badge badge rounded-pill">${invoice.days}</small>
+                    <h6 class="my-0">Invoice #${invoice.number}</h6>
+                    <small class="invoiceDays ms-2 badge badge rounded-pill ${invoiceDaysClass}">${invoice.days} days</small>
                 </div>
                 <small class="invoiceCompany text-muted">${invoice.company}</small>
             </div>
-                <span class="invoiceAmount text-muted">${invoice.amount}</span>
+                <span class="invoiceAmount text-muted">$${invoice.amount.toFixed(2)}</span>
+                
         </li>`
-
         invoiceList += invoiceListItems 
         
     }
