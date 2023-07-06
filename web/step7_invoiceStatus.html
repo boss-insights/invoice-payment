@@ -12,24 +12,40 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
+    <link rel="stylesheet" type="text/css" href="./breadcrumb.css" />
+    <!-- Start Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- End Fonts -->
     <title>Invoice Payment - Invoice Status</title>
     <script src="step7.js" defer></script>
   </head>
+  <div id="polygon">
+    <img src="/images/blueRectangle.svg" style="display:none"/>
+  </div>
   <body class="bg-light">
     <div class="container">
       <main>
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="{{ BRAND_LOGO }}" alt="" height="64">
-            <h2>Invoice Payment - Invoice Status</h2>
-            <p class="lead">Using Accounting App Data To Send Payment Links For Invoices</p>
-            <hr>
-        </div>
-        
-    
-        <div id= "invoice-status">
+        <div class="mt-5 pt-5 pb-3 text-center">
             
+            <h2 class="page-title">Merchant Invoice Payment</h2>
+            <nav>
+              <ol class="cd-multi-steps text-top">
+                <li id="navText" class="visited"><a href="index.html">Sign-Up</a></li>
+                <li id="navText" class="visited"><a href="step2.html">Connect</a></li>
+                <li id="navText" class="visited"><a href="step3.html">Invoices</a></li>
+                <li id="navText" class="current"><em>Status</em></li>
+              </ol>
+          </nav>
+  
         </div>
-        <a href="step3.php"><button type="button" class="btn btn-primary">Send Another Payment Link</button></a>
+        <div class="mx-auto col-10 col-md-6 col-lg-6">
+        <div id="accountCard">
+        <div id= "invoice-status"></div>
+        <a href="step3.php"><button type="button" id="submitForm" class="w-100 btn btn-primary btn-lg mt-3">Return To Invoices</button></a>
+        </div>
+      </div>
       </main>
     </div>
   </body>
