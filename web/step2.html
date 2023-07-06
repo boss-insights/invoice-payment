@@ -11,8 +11,13 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
-
-
+    <link rel="stylesheet" type="text/css" href="./breadcrumb.css" />
+    <!-- Start Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- End Fonts -->
+    
 
     <script type="module">
       import {getSessionCookie} from './step2.js';
@@ -26,7 +31,7 @@
             name: getSessionCookie('org_name'),
             brand: {accent:"#" + getSessionCookie("brand_colour")},
             domain: getSessionCookie('account_domain'),
-            cancel: getSessionCookie('site_url') + "/step1.php",
+            cancel: getSessionCookie('site_url') + "/index.php",
             redirect: getSessionCookie('site_url') + "/step3.php",
             platforms: ["accounting"],
             token: getSessionCookie('embed_token'),
@@ -40,36 +45,31 @@
         });
     </script>
 
-    <title>Invoice Payment - Connect Accounting Application</title>
+    <title>Invoice Payment</title>
   </head>
+  <div id="polygon">
+    <img src="/images/blueRectangle.svg" style="display:none"/>
+  </div>
   <body class="bg-light">
-    <div class="container">
+    <div class="linkContainer container">
       <main>
-        <div class="py-5 text-center">
-          <img
-            class="d-block mx-auto mb-4"
-            src="{{ BRAND_LOGO }}"
-            alt=""
-            height="64"
-          />
-          <h2>Invoice Payment - Connect Accounting Application</h2>
-          <p class="lead">
-            Using Accounting App Data To Send Payment Links For Invoices
-          </p>
+        <div class="mt-5 pt-5 pb-3 text-center">
+ 
+          <h2 class="page-title">Merchant Invoice Payment</h2>
+          <nav>
+            <ol class="cd-multi-steps text-top">
+              <li id="navText" class="visited"><a href="index.html">Sign-Up</a></li>
+              <li id="navText" class="current"><em>Connect</em></li>
+              <li id="navText"><em>Invoices</em></li>
+              <li id="navText"><em>Status</em></li>
+            </ol>
+        </nav>
         </div>
         <div class="DockLink_AppList">
           
         </div>
 
       </main>
-      <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2021-2023 TestLender2</p>
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacy</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-      </footer>
     </div>
   </body>
 </html>

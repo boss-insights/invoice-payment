@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 require __DIR__ . '/../common.php';
 
 if (!isset($_SESSION['account_key'])) {
-	header('Location: step1.php');
+	header('Location: index.php');
 }
 
 $selfSigned = (bool)getenv('SELF_SIGNED_CERT');

@@ -1,5 +1,6 @@
 // Create a blank invoices item in local storage to track paid status.
 localStorage.setItem("invoices",JSON.stringify({}));
+console.log("Invoices statuses: ",localStorage.getItem("invoices"));
 
 //function to get session cookies
 export function getSessionCookie(cookieName) {
