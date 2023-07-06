@@ -11,26 +11,48 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
+    <link rel="stylesheet" type="text/css" href="./breadcrumb.css" />
+    <!-- Start Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- End Fonts -->
     <script src="step6.js"  defer></script>
 
-    <title>Invoice Example - Payment Status</title>
+    <title>Invoice Payment</title>
   </head>
+  <div id="polygonGreen">
+    <img src="/images/greenRectangle.svg" style="display:none"/>
+  </div>
   <body class="bg-light">
     <div class="container">
       <main>
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="{{ BRAND_LOGO }}" alt="" height="64">
-            <h2>Invoice Example - Payment Status</h2>
-            <p class="lead">Using Accounting App Data To Send Payment Links For Invoices</p>
+        <div class="mt-5 pt-5 pb-3 text-center">
+            
+            <h2 class="page-title">Business Invoice Payment</h2>
+            <nav>
+              <ol class="cd-multi-steps text-top">
+                <li id="navText" class="visited"><a href="step5.html">Payment</a></li>
+                <li id="navText" class="current"><em>Confirmed</em></li>
+              </ol>
+          </nav>
         </div>
-        <hr>
+        
     
-        <div class="d-flex justify-content-center row g-5 text-center">
+        <!-- <div class="d-flex justify-content-center row g-5 text-center">
             <i class="d-flex justify-content-center align-items-center  checkmark">✓</i>
             <h2 class="text-success">SUCCESS!</h2>
             <p id="successMessage" class="fs-4 fw-normal text-center my-1"></p>
             <p class="fs-4 fw-normal text-center my-1">Thank you for the privilege of your business. Let us know if we can help in the future.</p>
-        </div>
+        </div> -->
+        <div class="mx-auto col-10 col-md-6 col-lg-6">
+        <div id="accountCard">
+          <!-- <div id="custom-loader"></div> -->
+        <div id="checkmarkContainer"></div>
+        <div id="successContainer"></div>
+      </div>
+    </div>
+
       </main>
     </div>
   </body>

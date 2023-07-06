@@ -10,28 +10,45 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" href="./breadcrumb.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="./spinner.css"/> -->
     <link rel="stylesheet" type="text/css" href="./invoice.css" />
     <link rel="stylesheet" href="checkout.css" />
+    <!-- Start Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- End Fonts -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="step2.js"  type="module" ></script>
     <script src="step5.js"  type="module" ></script>
     <script src="checkout.js" defer></script>
     <title>Invoice Payment - Payment</title>
   </head>
+  <div id="polygonGreen">
+    <img src="/images/greenRectangle.svg" style="display:none"/>
+  </div>
   <body class="bg-light">
     <div class="container">
       <main>
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="{{ BRAND_LOGO }}" alt="" height="64">
-            <h2>Invoice Payment - Payment</h2>
-            <p class="lead">Using Accounting App Data To Send Payment Links For Invoices</p>
-            <hr>
+        <div class="mt-5 pt-5 pb-3 text-center">
+            <h2 class="page-title">Business Invoice Payment</h2>
+            <nav>
+              <ol class="cd-multi-steps text-top">
+                <li id="navText" class="current"><a href="index.html">Payment</a></li>
+                <li id="navText"><em>Confirmed</em></li>
+              </ol>
+          </nav>
+            
         </div>
-
-        <div class="d-flex justify-content-center row g-5 text-center">
-            <div id="invoice-data"></div>
-            <h4 class="fs-4 fw-normal text-center my-1 mb-3">Please enter your payment information:</h4>
-
+        <div class="container">
+          <div id="paymentCard">
+          
+        <div class="d-flex justify-content-center row g-5 text-left">
+            <div id="invoice-data" class="col mt-5 pt-4"></div>
+            
+            <div class="col">
+              
             <form id="payment-form">
               <div id="link-authentication-element">
                 <!--Stripe.js injects the Link Authentication Element-->
@@ -45,7 +62,11 @@
               </button>
               <div id="payment-message" class="hidden"></div>
             </form>
+          </div>
         </div>
+        </div>
+      </div>
+       
      
       </main>
     </div>
