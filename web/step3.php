@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 require __DIR__ . '/../common.php';
 
 if (!isset($_SESSION['account_key'])) {
-  header('Location: step1.php');
+  header('Location: index.php');
   exit;
 }
 
@@ -49,7 +49,7 @@ if (isset($_GET['invoices'])) {
         $resultCount = count($result);
         foreach ($result as $invoice) {
         if ($invoice['balance'] > 0) {
-            $invoices[] = ['number' => $invoice['invoiceNumber'], 'company' => $invoice['customerName'], 'amount' => $invoice['balance'] / 100, 'due' => $invoice['paymentDueDate'], 'days' => (int)round(((time() - strtotime($invoice['paymentDueDate'])) / 86400)), 'billing_email' => $invoice['billingEmail']];
+            $invoices[] = ['number' => $invoice['invoiceNumber'], 'company' => $invoice['customerName'], 'amount' => $invoice['balance'] / 100, 'due' => $invoice['paymentDueDate'], 'days' => (int)round(((time() - strtotime($invoice['paymentDueDate'])) / 86400)), 'billing_email' => $invoice['billingEmail'], 'invoiceId' => $invoice['srcId'], 'customerRef' => $invoice['customerId']];
         }
         }
     } else {

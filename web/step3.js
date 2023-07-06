@@ -1,29 +1,12 @@
-paymentLink.addEventListener("click", showPaymentLink);
-function showPaymentLink(invoiceID) {
-    //shows payment url after button is clicked
-    let paymentURL = document.createElement("a");
-    let buttonBox = document.getElementById("button-box");
-    buttonBox.appendChild(paymentURL);
-    paymentURL.setAttribute("href", "./step4.html");
-    paymentURL.setAttribute("class", "btn btn-secondary btn-lg mb-3");
-    paymentURL.innerHTML="Payment Link";
-    buttonContainer.appendChild(paymentURL);
-    
-    //shows invoice status page url after button is clicked
-    let statusURL = document.createElement("a");
-    buttonBox.appendChild(statusURL);
-    statusURL.setAttribute("href", "./step7_invoiceStatus.html");
-    statusURL.setAttribute("class", "btn btn-secondary btn-lg mb-3");
-    let lineBreak = document.createElement("br")
-    invoiceContainer.appendChild(lineBreak);
-    statusURL.innerHTML="Invoice Status";
-    buttonContainer.appendChild(statusURL);
-   
-    //disables payment button
-    paymentLink.setAttribute("disabled", true);
-    paymentLink.innerHTML = "Payment Link Sent";
-};
+// paymentLink.addEventListener("click", () => showPaymentLink(buttonContainer));
 
+function showPaymentLink(currentButtonContainer) {
+  // Hide the Show Payment Link Button.
+  currentButtonContainer.querySelector("button").setAttribute('hidden', true);
+  // Reveal the Payment Link and Invoice Status buttons.
+  currentButtonContainer.querySelectorAll("a").forEach((node) => node.removeAttribute("hidden"));
+  currentButtonContainer.style="justify-content:space-around"
+};
 
 const url = 'step3.php?invoices';
 
@@ -34,6 +17,11 @@ fetch(url, {
   .then(data => {
     let invoiceList = '<ul id="invoiceList" class="list-group mb-3">';
 
+    document.getElementById('invoiceHeading').removeAttribute('hidden');
+
+    // document.getElementById('invoiceHeading').innerHTML = "Found the following invoices, select to send payment link:";
+
+    document.getElementById("loadingMessage").setAttribute("hidden", true);
     
     for (let invoice of data) {
 
@@ -54,13 +42,27 @@ fetch(url, {
                     <small class="invoiceDays ms-2 badge badge rounded-pill ${invoiceDaysClass}">${invoice.days} days</small>
                 </div>
                 <small class="invoiceCompany text-muted">${invoice.company}</small>
+                <span class="invoiceAmount text-muted">$${invoice.amount.toLocaleString("en-US")}</span>
             </div>
-                <span class="invoiceAmount text-muted">$${invoice.amount.toFixed(2)}</span>
+            <div class="invoiceButtonContainer">
+            <button id="send-link-${invoice.number}" class="submitForm btn btn-primary btn-md" type="button" hidden>Send Payment Link</button>
+            <a href="./step5.html" target="_blank" class="btn btn-secondary btn-md" hidden>Payment Link</a>
+            <a href="./step7_invoiceStatus.html" class="btn btn-secondary btn-md" hidden>Invoice Status</a>
+            </div>
+      
                 
         </li>`
         invoiceList += invoiceListItems 
         
     }
+// accountCard.innerHTML += `<div id="buttonContainer" class="d-flex justify-content-center row text-center mb-5">
+// <button id="paymentLink" class="w-100 btn btn-primary btn-lg my-5 submitForm" disabled>Send Payment Link</button>
+// </div>`;
+    // <div class="invoiceButtonContainer">
+    // <button id="send-link-${invoice.number}" class="submitForm btn btn-primary btn-sm" type="button" hidden>Send Payment Link</button>
+    // <a href="./step5.html" class="btn btn-secondary btn-sm" hidden>Payment Link</a>
+    // <a href="./step7_invoiceStatus.html" class="btn btn-secondary btn-sm" hidden>Invoice Status</a>
+    // </div>
 
     invoiceList += '</ul>'
     document.getElementById('invoice-form').innerHTML+=invoiceList;
@@ -70,19 +72,47 @@ fetch(url, {
 
     radios.forEach(function (radio) {
     radio.addEventListener('change', function () {
+      let invoiceJSON = decodeURIComponent(this.closest('li').dataset.invoiceJson);
+      let invoiceNumber = JSON.parse(invoiceJSON).number;
+      console.log(invoiceNumber);
+      console.log(this.checked);
+      // console.log(!this.checked);
+      let currentPaymentLink =  document.getElementById(`send-link-${invoiceNumber}`);
+
+      document.querySelectorAll('button[id^="send-link"]').forEach(function (node) {
+        node.setAttribute('hidden', true);
+        })
+
         if (this.checked) {
-       
-        let invoiceJSON = decodeURIComponent(this.closest('li').dataset.invoiceJson);
         localStorage.setItem('invoiceJSON', invoiceJSON);
-        paymentLink.removeAttribute("disabled");
+
+        // paymentLink.setAttribute("disabled", true);
+
+        // paymentLink.removeAttribute("disabled");
+
+
         
-        } 
+        // Hides all buttons
+        document.querySelectorAll('.invoiceButtonContainer').forEach(function (node) {
+          node.setAttribute('hidden', true);
+          node.querySelectorAll("a").forEach((node) => node.setAttribute('hidden', true));
+        })
+        
+        // Reveals only the selected invoice's buttons.
+        currentPaymentLink.removeAttribute('hidden');
+        currentPaymentLink.parentElement.removeAttribute('hidden');
+        currentPaymentLink.addEventListener("click", () => showPaymentLink(currentPaymentLink.parentElement));
+
+
+        } else {
+          document.getElementById(`send-link-${invoiceNumber}`).setAttribute('hidden', true);
+        }
         
     });
     });
 
-    let loadingSpinner = document.getElementsByClassName("lds-ellipsis");
-    loadingSpinner[0].remove();
+    let loadingSpinner = document.getElementById("custom-loader");
+    loadingSpinner.remove();
 
   })
   .catch(error => {
