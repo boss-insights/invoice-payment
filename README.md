@@ -30,7 +30,7 @@ Step 3 will perform an API call using our `invoices` endpoint of the Boss Insigh
 
 Step 4 will present invoice information to business customer, business customer can select desired amount they would like to pay towards invoice which will be processed through a Stripe widget. Upon successful payment, business customer will be redirected to Step 5.
 
-Step 5 will perform an API post using out `proxy` endpoint of the Boss Insights API which will update the accounting software's invoice data with the amount paid. This page will also display a success message to the business customer.
+Step 5 will perform an API post using our `proxy_request` endpoint of the Boss Insights API which will update the accounting software's invoice data with the amount paid. This page will also display a success message to the business customer.
 
 Step 6 will present a status page to the merchant with the statuses of either Paid/Partially Paid/Pending.
 
