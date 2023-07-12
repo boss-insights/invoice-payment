@@ -39,8 +39,6 @@ if (isset($_GET['invoices'])) {
         throw new Exception($e->getMessage(), $e->getCode(), $e);
     }
 
-
-
     if ($response->getStatusCode() === 200) {
         $result = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         if ($result === null) {

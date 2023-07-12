@@ -16,14 +16,10 @@ if (!isset($_SESSION['account_key'])) {
 
 $selfSigned = (bool)getenv('SELF_SIGNED_CERT');
 $client = new Client(['verify' => !$selfSigned, 'base_uri' => 'https://' . $_SESSION['account_domain']]);
-// var_dump( file_get_contents('php://input'));
 $body = json_decode(file_get_contents("php://input"), true);
-// var_dump($_POST);die();
-// header('Content-Type: text/html');
+
 echo '<pre>'; 
 print_r($body);
-// echo $_POST['amount'];die();
-// ['amount'], $_POST['customerRef'], $_POST['invoiceId'])
 
 if (isset($body['customerRef'], $body['invoiceId'], $body['amount'])) {
 
@@ -49,15 +45,6 @@ if (isset($body['customerRef'], $body['invoiceId'], $body['amount'])) {
             'Accept' => 'application/json'
         ],
         'body' => $request_data
-        // 'form_params' => [
-        //     "CustomerRef" => ["value" => $body['customerRef']],
-        //                 "TotalAmt" => $body['amount'],
-        //                 "Line" => [
-        //                         "Amount" => $body['amount'],
-        //                         "LinkedTxn" => ["TxnId" => $body['invoiceId'],"TxnType" => "Invoice"]
-        //                 ],
-                        
-        //             ]
         ]);
         print_r($request_data);
         print_r($response->getBody()->getContents());

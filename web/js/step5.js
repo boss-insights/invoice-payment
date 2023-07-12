@@ -1,80 +1,50 @@
-let customPaymentAmout = document.getElementById("customPaymentAmount");
-let submit = document.getElementById("submit");
+let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
 
-// updates amount that customer is paying/must pay
-function updatePaymentAmount(){
-  // Check for invalid values
-  let partialPayment = Number(customPaymentAmout.value);
-  if (validPartialPayment(partialPayment) == false){
-    return console.log("Invalid partial payment.");
-  }
-  let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
-  parsedInvoiceData["paymentAmount"] = partialPayment;
-  localStorage.setItem("invoiceJSON",JSON.stringify(parsedInvoiceData));
-  const items = [{invoiceNumber: parsedInvoiceData["number"]},
-               {invoiceAmount: Math.ceil(partialPayment*100)} ];
-
-  customPaymentAmout.className = "customPaymentAmount";
-
-  // Create a new payment intent by making a POST with partial payment amount.
-  fetch("/create.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }),
-  }).then((r) => r.json())
+// Update the invoice's status to paid.
+let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
+if (parsedInvoiceData["paymentAmount"] < parsedInvoiceData["amount"]) {
+  parsedInvoiceStatus[parsedInvoiceData["number"]] = "Partially Paid";
+} else {
+  parsedInvoiceStatus[parsedInvoiceData["number"]] = "Paid";
 }
 
-// checks if custom payment amount entered by customer is valid/error-checking
-function validPartialPayment(partialPayment) {
-  if (partialPayment <= 0 || partialPayment > parsedInvoiceData["amount"] || Number.isNaN(partialPayment)) {
-    customPaymentAmout.className = "customPaymentAmount-invalid";
-    submit.disabled = true;
-    return false;
-  } else {
-    return true;
-  }
-}
+localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
 
-customPaymentAmout.addEventListener("change", updatePaymentAmount);
 
-// reveals the form when form finishes loading
-window.addEventListener("load", revealForm);
+let checkmarkContainer = document.getElementById("checkmarkContainer");
+let successContainer = document.getElementById("successContainer");
 
-function revealForm() {
+checkmarkContainer.innerHTML = `<div><svg class="checkmark checkmark-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+  <circle class="checkmark-circle" cx="25" cy="25" r="25" fill="none" />
+  <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+  </svg></div>`;
+
+successContainer.innerHTML += `<div id="successMessage" class="d-flex justify-content-center row g-5 text-center">
+  <h2 class="text-success">SUCCESS!</h2>
+  <p id="integrationMessage" class="mt-1">${parsedInvoiceData.company}, you've successfully paid <strong>invoice #${parsedInvoiceData.number}</strong> for the amount of <strong>$${parsedInvoiceData.paymentAmount.toFixed(2).toLocaleString("en-US")}</strong>.</p>
+  </div>`
+
   setTimeout(() => {
-    let paymentForm = document.getElementById("payment-form");
-    let loadingSpinner = document.getElementById("custom-loader");
-    paymentForm.hidden = false;
-    loadingSpinner.remove();
-    console.log("LOADED +++++++++++++++++++++")
+    successContainer.style.display = "block";
   }, 2000);
-  
-}
 
-//when page loads injects invoice info to html
-document.addEventListener('DOMContentLoaded', function() {
 
-    let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
-    let checkedInvoiceData= `
-    <h4>Hi ${parsedInvoiceData.company},</h4>
-    <p class="mb-3">You have an invoice due, please <br> see the details below:</p>
-    <p><strong>Invoice: #${parsedInvoiceData.number} <br> Amount due: $${parsedInvoiceData.amount.toFixed(2).toLocaleString("en-US")} <br> Due date: ${parsedInvoiceData.due.slice(0,10)}</strong></p>
-    <p class="mb-3">Please enter your payment information.</p>`;
-      console.log(checkedInvoiceData);
-      document.getElementById('invoice-data').innerHTML+=checkedInvoiceData;
+function objectToFormData(obj) {
+  const formData = new FormData();
 
-      // Disables Pay Now button if invoice is already paid.
-      let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
-      let currentInvoiceStatus = parsedInvoiceStatus[parsedInvoiceData.number];
-      if (currentInvoiceStatus == "paid") {
-          let payNowButton = document.getElementById("payNow");
-          payNowButton.innerHTML="Invoice Paid";
-          payNowButton.setAttribute("disabled", true);
-          payNowButton.parentNode.removeAttribute("href");
-      }
-    
-    customPaymentAmout.value = parsedInvoiceData["amount"].toFixed(2);
+  Object.entries(obj).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
+  return formData;
+};
+
+formDataInvoice = objectToFormData(parsedInvoiceData);
+const url = 'step5.php';
+
+jsonString = JSON.stringify(parsedInvoiceData);
+let http = new XMLHttpRequest();
  
-    });
-
-
+http.open('post', url, true);
+http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+http.send(jsonString);

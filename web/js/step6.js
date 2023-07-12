@@ -1,50 +1,27 @@
+//js for invoice status page for merchant
+let invoice_status_container = document.getElementById("invoice-status")
+
 let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
 
-// Update the invoice's status to paid.
+let customer_name = parsedInvoiceData["company"];
+
+
+// Check invoice status.
 let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
-if (parsedInvoiceData["paymentAmount"] < parsedInvoiceData["amount"]) {
-  parsedInvoiceStatus[parsedInvoiceData["number"]] = "Partially Paid";
-} else {
-  parsedInvoiceStatus[parsedInvoiceData["number"]] = "Paid";
+let currentInvoiceStatus = parsedInvoiceStatus[parsedInvoiceData.number];
+if (currentInvoiceStatus == undefined) {
+    currentInvoiceStatus = "Pending";
 }
 
-localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
+
+invoice_status_container.innerHTML = `
+    <div class="invoice-info">
+    <h4 class="text-center mb-4">Invoice Details</h4>
+    <p><strong>Company Name:</strong> ${parsedInvoiceData.company}</p>
+    <p><strong>Invoice:</strong> #${parsedInvoiceData.number}</p>
+    <p><strong>Amount Due:</strong> $${parsedInvoiceData.amount.toFixed(2).toLocaleString("en-US")}</p>
+    <p><strong>Due Date:</strong> ${parsedInvoiceData.due.slice(0,10)}</p>
+    <p><strong>Invoice Status:</strong> ${currentInvoiceStatus}</p>
+    </div>`;
 
 
-let checkmarkContainer = document.getElementById("checkmarkContainer");
-let successContainer = document.getElementById("successContainer");
-
-checkmarkContainer.innerHTML = `<div><svg class="checkmark checkmark-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-  <circle class="checkmark-circle" cx="25" cy="25" r="25" fill="none" />
-  <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-  </svg></div>`;
-
-successContainer.innerHTML += `<div id="successMessage" class="d-flex justify-content-center row g-5 text-center">
-  <h2 class="text-success">SUCCESS!</h2>
-  <p id="integrationMessage" class="mt-1">${parsedInvoiceData.company}, you've successfully paid <strong>invoice #${parsedInvoiceData.number}</strong> for the amount of <strong>$${parsedInvoiceData.paymentAmount.toFixed(2).toLocaleString("en-US")}</strong>.</p>
-  </div>`
-
-  setTimeout(() => {
-    successContainer.style.display = "block";
-  }, 2000);
-
-
-function objectToFormData(obj) {
-  const formData = new FormData();
-
-  Object.entries(obj).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
-
-  return formData;
-};
-
-formDataInvoice = objectToFormData(parsedInvoiceData);
-const url = 'step6.php';
-
-jsonString = JSON.stringify(parsedInvoiceData);
-let http = new XMLHttpRequest();
- 
-http.open('post', url, true);
-http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-http.send(jsonString);

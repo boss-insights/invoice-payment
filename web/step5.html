@@ -11,71 +11,38 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/checkout.css" />
     <!-- Start Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- End Fonts -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="./js/step2.js"  type="module" ></script>
-    <script src="./js/step5.js"  type="module" ></script>
-    <script src="./js/checkout.js" defer></script>
-    <title>Invoice Payment - Payment</title>
+    <script src="./js/step5.js"  defer></script>
+
+    <title>Invoice Payment</title>
   </head>
   <div id="polygonGreen">
     <img src="/images/greenRectangle.svg" style="display:none"/>
   </div>
   <body class="bg-light">
-    <div class="container pb-5">
+    <div class="container">
       <main>
         <div class="mt-5 pt-5 pb-3 text-center">
+            
             <h2 class="page-title">Business Invoice Payment</h2>
             <nav>
               <ol class="cd-multi-steps text-top">
-                <li id="navText" class="current"><a href="index.html">Payment</a></li>
-                <li id="navText"><em>Confirmed</em></li>
+                <li id="navText" class="visited"><a href="step4.html">Payment</a></li>
+                <li id="navText" class="current"><em>Confirmed</em></li>
               </ol>
           </nav>
-            
         </div>
-        <div class="container pb-5">
-          <div id="paymentCard">
-          
-        <div class="d-flex justify-content-center row g-5 text-left">
-            <div id="invoice-data" class="col mt-5 pt-4"></div>
-            
-            <div class="col">
-
-            <div id="custom-loader" style="margin: calc(50% - 50px)"></div>
-              
-            <form id="payment-form" hidden>
-              <div id="link-authentication-element">
-                <!--Stripe.js injects the Link Authentication Element-->
-              </div>
-              <div id="payment-element">
-                <!--Stripe.js injects the Payment Element-->
-              </div>
-
-              <label for="customPaymentAmount">Payment amount</label>
-              <div id="currencySymbol">$</div>
-              <input id="customPaymentAmount" class="customPaymentAmount" type="text" inputmode="text" name="customPaymentAmount" placeholder="" aria-invalid="false" aria-required="true" value="">
-              
-
-              <!-- <input id="customPaymentAmount" type="number"/> -->
-
-              <button id="submit">
-                <div class="spinner hidden" id="spinner"></div>
-                <span id="button-text">Pay now</span>
-              </button>
-              <div id="payment-message" class="hidden"></div>
-            </form>
-          </div>
-        </div>
-        </div>
+        <div class="mx-auto col-10 col-md-6 col-lg-6">
+        <div id="accountCard">
+        <div id="checkmarkContainer"></div>
+        <div id="successContainer"></div>
       </div>
-       
-     
+    </div>
+
       </main>
     </div>
   </body>

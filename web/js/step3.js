@@ -43,8 +43,8 @@ fetch(url, {
             </div>
             <div class="invoiceButtonContainer">
             <button id="send-link-${invoice.number}" class="submitForm btn btn-primary btn-md" type="button" hidden>Send Payment Link</button>
-            <a href="./step5.html" target="_blank" class="btn btn-secondary btn-md" hidden>Payment Link</a>
-            <a href="./step7.html" class="btn btn-secondary btn-md" hidden>Invoice Status</a>
+            <a href="./step4.html" target="_blank" class="btn btn-secondary btn-md" hidden>Payment Link</a>
+            <a href="./step6.html" class="btn btn-secondary btn-md" hidden>Invoice Status</a>
             </div>
       
                 
