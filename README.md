@@ -13,12 +13,12 @@ This is an example invoice payment application. A merchant is able to connect to
 5. Business Client redirected to confirmation/success page. Payment amount updated on Quickbooks.
 6. Merchant can check invoice payment status on step 6 or from Quickbooks UI.
 
-![Flow chart of steps application performs](web\images\invoice-payment-flow.png)
+![Flow chart of steps application performs](https://github.com/boss-insights/invoice-payment/blob/main/web/images/invoice-payment-flow.png)
 
 ### How the example app works (Detailed)
 
 When you first access the application you should be presented with `Index` which is Step 1 and looks like the screenshot below:
-![Example application screenshot showing step 1](web\images\invoice-payment.png "Step 1")
+![Example application screenshot showing step 1](https://github.com/boss-insights/invoice-payment/blob/main/web/images/invoice-payment.png "Step 1")
 
 At this point only one API call has been performed which is to add the current domain name that the app is being accessed via to an allow-list permitting embedding of the javascript widget. This is provided as an example convenience and typically in a production app you would add this manually yourself via the `Developers > Embed > Allowed URLs` menu option within the administration application. 
 
