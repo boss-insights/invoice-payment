@@ -10,8 +10,7 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="./invoice.css" />
-    <link rel="stylesheet" type="text/css" href="./breadcrumb.css" />
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
     <!-- Start Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +19,8 @@
     
 
     <script type="module">
-      import {getSessionCookie} from './step2.js';
-      import {loadScript} from './step2.js';
+      import {getSessionCookie} from './js/step2.js';
+      import {loadScript} from './js/step2.js';
          const srcLink = decodeURIComponent(getSessionCookie('ORG_URL')) + "/dock/link/2022-09-08/link.js";
         loadScript(srcLink)
         .then( data  => {

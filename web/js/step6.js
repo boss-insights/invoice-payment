@@ -2,7 +2,12 @@ let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
 
 // Update the invoice's status to paid.
 let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
-parsedInvoiceStatus[parsedInvoiceData["number"]] = "Paid";
+if (parsedInvoiceData["paymentAmount"] < parsedInvoiceData["amount"]) {
+  parsedInvoiceStatus[parsedInvoiceData["number"]] = "Partially Paid";
+} else {
+  parsedInvoiceStatus[parsedInvoiceData["number"]] = "Paid";
+}
+
 localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
 
 
@@ -16,7 +21,7 @@ checkmarkContainer.innerHTML = `<div><svg class="checkmark checkmark-success" xm
 
 successContainer.innerHTML += `<div id="successMessage" class="d-flex justify-content-center row g-5 text-center">
   <h2 class="text-success">SUCCESS!</h2>
-  <p id="integrationMessage" class="mt-1">${parsedInvoiceData.company}, you've successfully paid <strong>invoice #${parsedInvoiceData.number}</strong> for the amount of <strong>$${parsedInvoiceData.amount.toLocaleString("en-US")}</strong>.</p>
+  <p id="integrationMessage" class="mt-1">${parsedInvoiceData.company}, you've successfully paid <strong>invoice #${parsedInvoiceData.number}</strong> for the amount of <strong>$${parsedInvoiceData.paymentAmount.toFixed(2).toLocaleString("en-US")}</strong>.</p>
   </div>`
 
   setTimeout(() => {
@@ -37,27 +42,9 @@ function objectToFormData(obj) {
 formDataInvoice = objectToFormData(parsedInvoiceData);
 const url = 'step6.php';
 
-// fetch(url, {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'multipart/form-data'
-//   },
-//   body: formDataInvoice
-
-// })
-//   .then(response =>
-//   console.log(response)
-//   )
-//   .catch(error => {
-//     // Handle any errors
-//     console.error(error);
-//   });
-
 jsonString = JSON.stringify(parsedInvoiceData);
 let http = new XMLHttpRequest();
  
 http.open('post', url, true);
 http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 http.send(jsonString);
-
-  // JSON.stringify(localStorage.getItem('invoiceJSON'))

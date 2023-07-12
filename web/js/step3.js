@@ -1,5 +1,4 @@
-// paymentLink.addEventListener("click", () => showPaymentLink(buttonContainer));
-
+// shows payment link button next to each invoice when clicked
 function showPaymentLink(currentButtonContainer) {
   // Hide the Show Payment Link Button.
   currentButtonContainer.querySelector("button").setAttribute('hidden', true);
@@ -8,6 +7,7 @@ function showPaymentLink(currentButtonContainer) {
   currentButtonContainer.style="justify-content:space-around"
 };
 
+// retrieving invoice data
 const url = 'step3.php?invoices';
 
 fetch(url, {
@@ -18,9 +18,6 @@ fetch(url, {
     let invoiceList = '<ul id="invoiceList" class="list-group mb-3">';
 
     document.getElementById('invoiceHeading').removeAttribute('hidden');
-
-    // document.getElementById('invoiceHeading').innerHTML = "Found the following invoices, select to send payment link:";
-
     document.getElementById("loadingMessage").setAttribute("hidden", true);
     
     for (let invoice of data) {
@@ -42,12 +39,12 @@ fetch(url, {
                     <small class="invoiceDays ms-2 badge badge rounded-pill ${invoiceDaysClass}">${invoice.days} days</small>
                 </div>
                 <small class="invoiceCompany text-muted">${invoice.company}</small>
-                <span class="invoiceAmount text-muted">$${invoice.amount.toLocaleString("en-US")}</span>
+                <span class="invoiceAmount text-muted">$${invoice.amount.toFixed(2).toLocaleString("en-US")}</span>
             </div>
             <div class="invoiceButtonContainer">
             <button id="send-link-${invoice.number}" class="submitForm btn btn-primary btn-md" type="button" hidden>Send Payment Link</button>
             <a href="./step5.html" target="_blank" class="btn btn-secondary btn-md" hidden>Payment Link</a>
-            <a href="./step7_invoiceStatus.html" class="btn btn-secondary btn-md" hidden>Invoice Status</a>
+            <a href="./step7.html" class="btn btn-secondary btn-md" hidden>Invoice Status</a>
             </div>
       
                 
@@ -55,28 +52,17 @@ fetch(url, {
         invoiceList += invoiceListItems 
         
     }
-// accountCard.innerHTML += `<div id="buttonContainer" class="d-flex justify-content-center row text-center mb-5">
-// <button id="paymentLink" class="w-100 btn btn-primary btn-lg my-5 submitForm" disabled>Send Payment Link</button>
-// </div>`;
-    // <div class="invoiceButtonContainer">
-    // <button id="send-link-${invoice.number}" class="submitForm btn btn-primary btn-sm" type="button" hidden>Send Payment Link</button>
-    // <a href="./step5.html" class="btn btn-secondary btn-sm" hidden>Payment Link</a>
-    // <a href="./step7_invoiceStatus.html" class="btn btn-secondary btn-sm" hidden>Invoice Status</a>
-    // </div>
 
     invoiceList += '</ul>'
     document.getElementById('invoice-form').innerHTML+=invoiceList;
 
     const radios = document.querySelectorAll('input[type="radio"]');
 
-
+// when invoice is clicked, sets current invoice
     radios.forEach(function (radio) {
     radio.addEventListener('change', function () {
       let invoiceJSON = decodeURIComponent(this.closest('li').dataset.invoiceJson);
       let invoiceNumber = JSON.parse(invoiceJSON).number;
-      console.log(invoiceNumber);
-      console.log(this.checked);
-      // console.log(!this.checked);
       let currentPaymentLink =  document.getElementById(`send-link-${invoiceNumber}`);
 
       document.querySelectorAll('button[id^="send-link"]').forEach(function (node) {
@@ -86,12 +72,6 @@ fetch(url, {
         if (this.checked) {
         localStorage.setItem('invoiceJSON', invoiceJSON);
 
-        // paymentLink.setAttribute("disabled", true);
-
-        // paymentLink.removeAttribute("disabled");
-
-
-        
         // Hides all buttons
         document.querySelectorAll('.invoiceButtonContainer').forEach(function (node) {
           node.setAttribute('hidden', true);

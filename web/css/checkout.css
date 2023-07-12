@@ -1,4 +1,4 @@
-/* Variables */
+/* Css for stripe */
 * {
     box-sizing: border-box;
   }
@@ -37,7 +37,7 @@
   }
   
   #payment-element {
-    margin-bottom: 24px;
+    margin-bottom: 0.75rem;
   }
   
   /* Buttons and links */
@@ -145,3 +145,42 @@
       min-width: initial;
     }
   }
+
+/* css for custom payment amount, an extra added field to stripe payment form in step 5 */
+
+#customPaymentAmount.customPaymentAmount {
+  margin-top: 0px;
+  padding: 12px 12px 12px 24px;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  transition-duration: 0.15s, 0.15s, 0.15s, 0.15s;
+  transition-timing-function: ease, ease, ease, ease;
+  transition-delay: 0s, 0s, 0s, 0s;
+  transition-property: background, border, box-shadow, color;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02);
+}
+
+#customPaymentAmount:focus {
+  outline: 0;
+  border-color: hsla(210, 96%, 45%, 50%);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02), 0 0 0 3px hsla(210, 96%, 45%, 25%), 0 1px 1px 0 rgba(0, 0, 0, 0.08);
+}
+
+#customPaymentAmount.customPaymentAmount-invalid {
+  margin-top: 0px;
+  padding: 12px 12px 12px 24px;
+  color: #df1b41;
+  border-color: #df1b41;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02), 0 0 0 1px #df1b41;
+}
+
+/* the dollar sign within the custom field */
+
+#currencySymbol {
+  height: 0;
+  position: relative;
+  top: 13px;
+  padding-left: 12px
+}

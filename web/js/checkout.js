@@ -33,13 +33,14 @@ let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
 parsedInvoiceStatus[parsedInvoiceData["number"]] = "Pending";
 localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
 
+// Set the payment amount.
+parsedInvoiceData["paymentAmount"] = parsedInvoiceData["amount"];
+localStorage.setItem("invoiceJSON",JSON.stringify(parsedInvoiceData));
+
 console.log(localStorage.getItem("invoices"));
-
-
 console.log("checkout.js amount as int: ",Math.ceil(parsedInvoiceData["amount"]*100));
 
 let elements;
-
 let currentPaymentIntent = initialize();
 
 console.log(currentPaymentIntent);
@@ -58,6 +59,8 @@ async function initialize() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
   }).then((r) => r.json());
+
+  
 
   elements = stripe.elements({ clientSecret });
 

@@ -2,9 +2,12 @@
 
 require __DIR__ . '/../common.php';
 require_once '../vendor/autoload.php';
-// require_once './stripe-secret.php';
+
 
 \Stripe\Stripe::setApiKey($commonData['STRIPE_SECRET_KEY']);
+
+
+
 
 function calculateOrderAmount(array $items): int {
     // Replace this constant with a calculation of the order's amount

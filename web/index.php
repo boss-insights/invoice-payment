@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 require __DIR__ . '/../common.php';
-// print_r($commonData);die();
 
 if ($_POST) {
 
@@ -64,7 +63,6 @@ if ($_POST) {
     setcookie('account_key', $_result['account_key'], time() + (86400 * 30), "/");
     setcookie('ORG_URL', $commonData['ORG_URL'], time() + (86400 * 30), "/");
     setcookie('STRIPE_PUBLISH_KEY', $commonData['STRIPE_PUBLISH_KEY'], time() + (86400 * 30), "/");
-    // var_dump($commonData); die();
 
 	$accountDomain = $result['account_domain'];
 	$subdomain = $result['subdomain'];

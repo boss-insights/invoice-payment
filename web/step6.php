@@ -31,15 +31,17 @@ if (isset($body['customerRef'], $body['invoiceId'], $body['amount'])) {
     try {
         $request_param = [
             "CustomerRef" => ["value" => $body['customerRef']],
-                        "TotalAmt" => $body['amount'],
+                        "TotalAmt" => $body['paymentAmount'],
                         "Line" => [[
-                                "Amount" => $body['amount'],
+                                "Amount" => $body['paymentAmount'],
                                 "LinkedTxn" => [["TxnId" => $body['invoiceId'],"TxnType" => "Invoice"]]
                         ]],
                         
                     ];
         $request_data = json_encode($request_param);
-
+//url below points to sandbox by default, if using production acct not sending it to sandbox want to send to qb
+//if production acct chosen -> don't want sandbox
+//realm ID changes w account
         $response = $client->request('POST', '/api/proxy_request?key=quickbooks&url=https%3A%2F%2Fsandbox-quickbooks.api.intuit.com%2Fv3%2Fcompany%2F4620816365260953720%2Fpayment', [
         'auth' => ['admin', $_SESSION['password']],
         'headers' => [

@@ -21,7 +21,7 @@ export function getSessionCookie(cookieName) {
     // Return null if the cookie is not found
     return null;
   };
-
+// loading link widget
   export const loadScript = (FILE_URL, async = true, type = "text/javascript") => {
     return new Promise((resolve, reject) => {
         try {
