@@ -1,7 +1,7 @@
 # Invoice Payment
 
 ## What This Application Does
-This is an example invoice payment application. A merchant is able to connect to an accounting integration using Boss Insight's Link Connection Widget, select an invoice, and then send a payment link specific to the business. Next, the business client is able to follow the link to make a payment towards the invoice. Finally, the merchant is able to view the payment status of the invoice, either through the application or through the accounting software's user interface.
+This is an example invoice payment application. A merchant is able to connect to an accounting integration using Boss Insight's Link Connection Widget, select an invoice, and then send a payment link specific to the business. Next, the business client is able to follow the link to make a payment towards the invoice using Stripe. Finally, the merchant is able to view the payment status of the invoice, either through the application or through the accounting software's user interface.
 
 > ⚠️ **Disclaimer**: This is an example application and not intended for production use as-is, it lacks code in areas such as logging and security and is provided as a bare-bones example of how to connect and fetch data from the Boss Insights API
 
@@ -16,6 +16,7 @@ This is an example invoice payment application. A merchant is able to connect to
 ![Flow chart of steps application performs](https://github.com/boss-insights/invoice-payment/blob/main/web/images/invoice-payment-flow.png)
 
 ### How the example app works (Detailed)
+This application involves 6 steps. Each step and its accompanying files will be labelled accordingly (i.e. index.html, index.php, index.js).
 
 When you first access the application you should be presented with `Index` which is Step 1 and looks like the screenshot below:
 ![Example application screenshot showing step 1](https://github.com/boss-insights/invoice-payment/blob/main/web/images/invoice-payment.png "Step 1")
@@ -66,7 +67,6 @@ This command will start a local web server running on port 8080
 | ORG_NAME           | yes      | The name of your company that should be shown to users                                                           | Example Capital Corp                |
 | ORG_URL            | yes      | Your Boss Insights account url                                                                                   | https://example.myintranetapps.com  |
 | API_KEY            | yes      | API Key used to identify API requests for your account                                                           | APIPROJECT3                         |
-| API_SECRET         | yes      | API Secret used to authenticate requests for your account                                                        |                                     |
 | ADMIN_URL          | yes      | The URL to your admin app. This is region dependant and will vary depending on your data residency               | https://admin.myintranetapps.com    |
 | ACCOUNT_KEY        | yes      | Your Boss Insights account unique identifier                                                                     | 5ff363e48e2a82.98390839             |
 | BRAND_ACCENT_COLOR | no       | A HTML hexadecimal color code that will be used in the example app as a bold color for buttons and other accents | CA76F6                              |
