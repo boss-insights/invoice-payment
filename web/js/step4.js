@@ -31,6 +31,7 @@ function validPartialPayment(partialPayment) {
     submit.disabled = true;
     return false;
   } else {
+    submit.disabled = false;
     return true;
   }
 }
