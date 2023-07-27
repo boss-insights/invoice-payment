@@ -1,5 +1,5 @@
 # Invoice Payment
-![Example application screenshot showing invoice payment step](web\images\invoice-payment-screen.PNG "Invoice Payment")
+![Example application screenshot showing invoice payment step](https://github.com/boss-insights/invoice-payment/blob/main/web/images/invoice-payment-screen.PNG "Invoice Payment")
 ## What This Application Does
 This is an example invoice payment application. A merchant is able to connect to an accounting integration using Boss Insight's Link Connection Widget, select an invoice, and then send a payment link specific to the business. Next, the business client is able to follow the link to make a payment towards the invoice using Stripe. Finally, the merchant is able to view the payment status of the invoice, either through the application or through the accounting software's user interface.
 
