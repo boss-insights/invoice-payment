@@ -44,12 +44,18 @@
           
         <div class="d-flex justify-content-center row g-5 text-left">
             <div id="invoice-data" class="col mt-5 pt-4"></div>
-            
+            <!-- step4.js injects here -->
             <div class="col">
 
             <div id="custom-loader" style="margin: calc(50% - 50px)"></div>
               
             <form id="payment-form" hidden>
+              <label for="customPaymentAmount">Payment amount</label>
+              <div id="currencySymbol">$</div>
+              <div class="customPaymentContainer">
+                <input id="customPaymentAmount" class="customPaymentAmount" type="text" inputmode="text" name="customPaymentAmount" placeholder="" aria-invalid="false" aria-required="true" value="">
+                <button>Confirm</button>
+              </div>
               <div id="link-authentication-element">
                 <!--Stripe.js injects the Link Authentication Element-->
               </div>
@@ -57,9 +63,7 @@
                 <!--Stripe.js injects the Payment Element-->
               </div>
 
-              <label for="customPaymentAmount">Payment amount</label>
-              <div id="currencySymbol">$</div>
-              <input id="customPaymentAmount" class="customPaymentAmount" type="text" inputmode="text" name="customPaymentAmount" placeholder="" aria-invalid="false" aria-required="true" value="">
+              
               <button id="submit">
                 <div class="spinner hidden" id="spinner"></div>
                 <span id="button-text">Pay now</span>

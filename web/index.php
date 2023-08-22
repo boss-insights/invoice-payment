@@ -42,7 +42,8 @@ if ($_POST) {
 				'name'        => $legalName,
 				'active'      => 1,
 				'datashare'   => 1,
-				'password'    => $newPassword
+				'password'    => $newPassword,
+				'environment' => 'sandbox'
 			], JSON_THROW_ON_ERROR)
 		]);
 	} catch (Exception $e) {

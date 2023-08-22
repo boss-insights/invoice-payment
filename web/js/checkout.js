@@ -1,49 +1,41 @@
+// Code for stripe widget
 function getSessionCookie(cookieName) {
-    let cookies = document.cookie.split(";"); // Split cookies by ';'
-    for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i].trim(); // Trim leading/trailing whitespace
-     
-      // Check if the cookie starts with the provided name
-
-      if (cookie.indexOf(cookieName + "=") === 0) {
-        
-        // Return the cookie value (substring after the name and '=')
-        console.log(cookie.substring(cookieName.length + 1));
-        return cookie.substring(cookieName.length + 1);
-      }
+  let cookies = document.cookie.split(";"); // Split cookies by ';'
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim(); // Trim leading/trailing whitespace
+    // Check if the cookie starts with the provided name
+    if (cookie.indexOf(cookieName + "=") === 0) {
+      // Return the cookie value (substring after the name and '=')
+      return cookie.substring(cookieName.length + 1);
     }
-    
-    // Return null if the cookie is not found
-    return null;
-  };
+  }
+  // Return null if the cookie is not found
+  return null;
+}
 
-// import { getSessionCookie } from "./step2.js";
-
-// This is your test publishable API key.
-const decodedStripe = decodeURI(getSessionCookie('STRIPE_PUBLISH_KEY'))
+// This is your test publishable API key, it is retrieved from common.php and is alright to be client side
+const decodedStripe = decodeURI(getSessionCookie("STRIPE_PUBLISH_KEY"));
 const stripe = Stripe(decodedStripe);
 
-// The items the customer wants to buy
-let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
-const items = [{invoiceNumber: parsedInvoiceData["number"]},
-               {invoiceAmount: Math.ceil(parsedInvoiceData["amount"]*100)} ];
+// Getting invoice details
+const parsedInvoiceData = JSON.parse(localStorage.getItem("invoiceJSON"));
+const items = [
+  { invoiceNumber: parsedInvoiceData["number"] },
+  { invoiceAmount: Math.ceil(parsedInvoiceData["amount"] * 100) },
+];
 
 // Set the invoice as pending.
-let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
+const parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
 parsedInvoiceStatus[parsedInvoiceData["number"]] = "Pending";
-localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
+localStorage.setItem("invoices", JSON.stringify(parsedInvoiceStatus));
 
 // Set the payment amount.
 parsedInvoiceData["paymentAmount"] = parsedInvoiceData["amount"];
-localStorage.setItem("invoiceJSON",JSON.stringify(parsedInvoiceData));
+localStorage.setItem("invoiceJSON", JSON.stringify(parsedInvoiceData));
 
-console.log(localStorage.getItem("invoices"));
-console.log("checkout.js amount as int: ",Math.ceil(parsedInvoiceData["amount"]*100));
-
+// Below is code from stripe
 let elements;
-let currentPaymentIntent = initialize();
-
-console.log(currentPaymentIntent);
+let currentPaymentIntent = initialize(items);
 
 checkStatus();
 
@@ -51,16 +43,14 @@ document
   .querySelector("#payment-form")
   .addEventListener("submit", handleSubmit);
 
-let emailAddress = '';
+let emailAddress = "";
 // Fetches a payment intent and captures the client secret
-async function initialize() {
+async function initialize(items) {
   const { clientSecret } = await fetch("/create.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
   }).then((r) => r.json());
-
-  
 
   elements = stripe.elements({ clientSecret });
 
@@ -73,9 +63,6 @@ async function initialize() {
 
   const paymentElement = elements.create("payment", paymentElementOptions);
   paymentElement.mount("#payment-element");
-
-  
-
 }
 
 async function handleSubmit(e) {

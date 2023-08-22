@@ -49,6 +49,7 @@ setcookie('org_name', $commonData['ORG_NAME'], time() + (86400 * 30), "/");
 setcookie('brand_colour', $commonData['BRAND_ACCENT_COLOR'], time() + (86400 * 30), "/");
 setcookie('account_domain', $accountDomain, time() + (86400 * 30), "/");
 setcookie('site_url', $commonData['SITE_URL'], time() + (86400 * 30), "/");
+setcookie('org_url', $commonData['ORG_URL'], time() + (86400 * 30), "/");
 setcookie('embed_token', $embedToken, time() + (86400 * 30), "/");
 
 header('Location: step2.html');

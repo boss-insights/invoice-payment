@@ -150,6 +150,7 @@
 
 #customPaymentAmount.customPaymentAmount {
   margin-top: 0px;
+  margin-bottom: 0px;
   padding: 12px 12px 12px 24px;
   background-color: #fff;
   border-radius: 5px;

@@ -1,4 +1,4 @@
-let parsedInvoiceData = JSON.parse(localStorage.getItem('invoiceJSON'));
+let parsedInvoiceData = JSON.parse(localStorage.getItem("invoiceJSON"));
 
 // Update the invoice's status to paid.
 let parsedInvoiceStatus = JSON.parse(localStorage.getItem("invoices"));
@@ -8,8 +8,7 @@ if (parsedInvoiceData["paymentAmount"] < parsedInvoiceData["amount"]) {
   parsedInvoiceStatus[parsedInvoiceData["number"]] = "Paid";
 }
 
-localStorage.setItem("invoices",JSON.stringify(parsedInvoiceStatus));
-
+localStorage.setItem("invoices", JSON.stringify(parsedInvoiceStatus));
 
 let checkmarkContainer = document.getElementById("checkmarkContainer");
 let successContainer = document.getElementById("successContainer");
@@ -21,14 +20,32 @@ checkmarkContainer.innerHTML = `<div><svg class="checkmark checkmark-success" xm
 
 successContainer.innerHTML += `<div id="successMessage" class="d-flex justify-content-center row g-5 text-center">
   <h2 class="text-success">SUCCESS!</h2>
-  <p id="integrationMessage" class="mt-1">${parsedInvoiceData.company}, you've successfully paid <strong>invoice #${parsedInvoiceData.number}</strong> for the amount of <strong>$${parsedInvoiceData.paymentAmount.toFixed(2).toLocaleString("en-US")}</strong>.</p>
-  </div>`
+  <p id="integrationMessage" class="mt-1">${
+    parsedInvoiceData.company
+  }, you've successfully paid <strong>invoice #${
+  parsedInvoiceData.number
+}</strong> for the amount of <strong>$${parsedInvoiceData.paymentAmount
+  .toFixed(2)
+  .toLocaleString("en-US")}</strong>.</p>
+  </div>`;
 
-  setTimeout(() => {
-    successContainer.style.display = "block";
-  }, 2000);
+// timeout to match stripe widget load
+setTimeout(() => {
+  successContainer.style.display = "block";
+}, 2000);
 
 
+formDataInvoice = objectToFormData(parsedInvoiceData);
+const url = "step5.php";
+
+jsonString = JSON.stringify(parsedInvoiceData);
+let http = new XMLHttpRequest();
+
+http.open("post", url, true);
+http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+http.send(jsonString);
+
+// Converts object to form
 function objectToFormData(obj) {
   const formData = new FormData();
 
@@ -37,14 +54,4 @@ function objectToFormData(obj) {
   });
 
   return formData;
-};
-
-formDataInvoice = objectToFormData(parsedInvoiceData);
-const url = 'step5.php';
-
-jsonString = JSON.stringify(parsedInvoiceData);
-let http = new XMLHttpRequest();
- 
-http.open('post', url, true);
-http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-http.send(jsonString);
+}
